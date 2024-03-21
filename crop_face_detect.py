@@ -10,6 +10,7 @@ FONT_SIZE = 1
 FONT_THICKNESS = 1
 TEXT_COLOR = (255, 0, 0)  # red
 
+########################################################################################
 def _normalized_to_pixel_coordinates(
     normalized_x: float, normalized_y: float, image_width: int,
     image_height: int) -> Union[None, Tuple[int, int]]:
@@ -23,6 +24,7 @@ def _normalized_to_pixel_coordinates(
     y_px = min(math.floor(normalized_y * image_height), image_height - 1)
     return x_px, y_px
 
+########################################################################################
 def visualize(
     image,
     detections
@@ -30,6 +32,7 @@ def visualize(
     """Draws bounding boxes and keypoints on the input image and returns it."""
     annotated_image = image.copy()
     height, width, _ = image.shape
+    
 
     if detections:
         for detection in detections:
@@ -51,6 +54,7 @@ def visualize(
 
     return annotated_image
 
+########################################################################################
 def calculate_face_score(bbox, image_width, image_height):
     """Calculate the score of a face based on its size and proximity to the center of the image."""
     area = bbox.width * bbox.height
@@ -66,6 +70,7 @@ def calculate_face_score(bbox, image_width, image_height):
 
     return area * (1 / (distance_to_center + 1))
 
+########################################################################################
 def find_largest_and_closest_to_center_face(detections, image_width, image_height):
     """Find the largest face closest to the center of the image."""
     best_face_bbox = None
@@ -81,6 +86,7 @@ def find_largest_and_closest_to_center_face(detections, image_width, image_heigh
 
     return best_face_bbox
 
+########################################################################################
 def visualize_largest_and_closest_to_center_face(image, detections) -> np.ndarray:
     """Visualize the largest face closest to the center of the image."""
     annotated_image = image.copy()
@@ -101,90 +107,7 @@ def visualize_largest_and_closest_to_center_face(image, detections) -> np.ndarra
 
     return annotated_image
 
-
-
-# def main():
-#     cap = cv2.VideoCapture(0)  
-#     mp_face_detection = mp.solutions.face_detection
-
-#     with mp_face_detection.FaceDetection(min_detection_confidence=0.5) as face_detection:
-#         while cap.isOpened():
-#             success, frame = cap.read()
-#             if not success:
-#                 print("Ignoring empty camera frame.")
-#                 continue
-
-#             rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-#             rgb_frame.flags.writeable = False
-#             results = face_detection.process(rgb_frame)
-
-#             annotated_image = frame.copy()
-#             if results.detections and len(results.detections) >= 2:
-#                 annotated_image = visualize_largest_and_closest_to_center_face(annotated_image, results.detections)
-
-#                 # Crop và lưu ảnh khuôn mặt
-#                 best_face_bbox = find_largest_and_closest_to_center_face(results.detections, frame.shape[1], frame.shape[0])
-#                 if best_face_bbox:
-#                     ymin = int(best_face_bbox.ymin * frame.shape[0])
-#                     xmin = int(best_face_bbox.xmin * frame.shape[1])
-#                     ymax = int((best_face_bbox.ymin + best_face_bbox.height) * frame.shape[0])
-#                     xmax = int((best_face_bbox.xmin + best_face_bbox.width) * frame.shape[1])
-#                     cropped_face = frame[ymin:ymax, xmin:xmax]
-#                     cv2.imwrite("cropped_face.jpg", cropped_face)
-#                 else:
-#                     print("No face detected or bounding box is missing!")
-
-#             else:
-#                 annotated_image = visualize(annotated_image, results.detections)
-
-#             cv2.imshow('MediaPipe Face Detection', annotated_image)
-#             if cv2.waitKey(5) & 0xFF == 27:
-#                 break
-#     cap.release()
-#     cv2.destroyAllWindows()
-
-# if __name__ == "__main__":
-#     main()
-# def main():
-#     cap = cv2.VideoCapture(0)  
-#     mp_face_detection = mp.solutions.face_detection
-
-#     with mp_face_detection.FaceDetection(min_detection_confidence=0.5) as face_detection:
-#         while cap.isOpened():
-#             success, frame = cap.read()
-#             if not success:
-#                 print("Ignoring empty camera frame.")
-#                 continue
-
-#             rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-#             rgb_frame.flags.writeable = False
-#             results = face_detection.process(rgb_frame)
-
-#             annotated_image = frame.copy()
-#             best_face_bbox = find_largest_and_closest_to_center_face(results.detections, frame.shape[1], frame.shape[0])
-#             if results.detections and len(results.detections) >= 2:
-#                 annotated_image = visualize_largest_and_closest_to_center_face(annotated_image, results.detections)
-#                 best_face_bbox = find_largest_and_closest_to_center_face(results.detections, frame.shape[1], frame.shape[0])
-#                 # bbox = find_largest_and_closest_to_center_face(results.detections, frame.shape[1], frame.shape[0])
-#                 if best_face_bbox is not None:
-#                     ymin = int(best_face_bbox.ymin * frame.shape[0])
-#                     xmin = int(best_face_bbox.xmin * frame.shape[1])
-#                     ymax = int((best_face_bbox.ymin + best_face_bbox.height) * frame.shape[0])
-#                     xmax = int((best_face_bbox.xmin + best_face_bbox.width) * frame.shape[1])
-#                     cropped_face = frame[ymin:ymax, xmin:xmax]
-#                     cv2.imwrite("cropped_face.jpg", cropped_face)
-#             else:
-#                 annotated_image = visualize(annotated_image, results.detections)
-
-#             cv2.imshow('MediaPipe Face Detection', annotated_image)
-#             if cv2.waitKey(5) & 0xFF == 27:
-#                 break
-#     cap.release()
-#     cv2.destroyAllWindows()
-
-# if __name__ == "__main__":
-#     main()
-
+########################################################################################
 def main():
     cap = cv2.VideoCapture(0)  
     mp_face_detection = mp.solutions.face_detection

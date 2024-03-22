@@ -109,7 +109,7 @@ def visualize_largest_and_closest_to_center_face(image, detections) -> np.ndarra
 
 ########################################################################################
 def main():
-    cap = cv2.VideoCapture(0)  
+    cap = cv2.VideoCapture("videos/video_3.mp4")  
     mp_face_detection = mp.solutions.face_detection
 
     with mp_face_detection.FaceDetection(min_detection_confidence=0.5) as face_detection:

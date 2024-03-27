@@ -29,8 +29,8 @@ def CheckBright(frame):
     return result, mean
 
 # Load image
-image_path = 'cropped_face.jpg'
-image = cv2.imread(image_path)
+
+image = cv2.imread("images/img_1.jpg")
 
 # Check brightness
 result, mean_brightness = CheckBright(image)

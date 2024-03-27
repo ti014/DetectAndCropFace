@@ -1,6 +1,6 @@
 import cv2
 from matplotlib import pyplot as plt
-image = cv2.imread("cropped_face.jpg")
+image = cv2.imread("images/img_1.jpg")
 alpha = 2 # Contrast control (1.0-3.0)
 beta = 0 # Brightness control (0-100)
 

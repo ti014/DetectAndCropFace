@@ -73,7 +73,8 @@ def calculate_face_score(bbox, image_width, image_height):
 ########################################################################################
 def find_largest_and_closest_to_center_face(detections, image_width, image_height):
     """Find the largest face closest to the center of the image."""
-    best_face_bbox = None
+    # best_face_bbox = None
+    best_face_bbox = []
     best_score = -float('inf')
 
     for detection in detections:
@@ -109,7 +110,7 @@ def visualize_largest_and_closest_to_center_face(image, detections) -> np.ndarra
 
 ########################################################################################
 def main():
-    cap = cv2.VideoCapture("videos/video_3.mp4")  
+    cap = cv2.VideoCapture(0)  
     mp_face_detection = mp.solutions.face_detection
 
     with mp_face_detection.FaceDetection(min_detection_confidence=0.5) as face_detection:
